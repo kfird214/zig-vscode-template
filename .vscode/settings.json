@@ -1,0 +1,8 @@
+{
+    // "zig.zls.builtinPath": "C:\\Zls\\zls.exe"
+
+    // "zig.zigVersion": "0.10.0",
+    // "zig.zigPath": "C:\\Zigup\\zig\\0.10.0\\files",
+    // "zig.zls.zigLibPath": "C:\\Zigup\\zig\\0.10.0\\files\\lib",
+    // "zig.buildFilePath": "${workspaceFolder}/build.0.10.0.zig",
+}
