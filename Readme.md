@@ -4,4 +4,4 @@ this template is a simple vscode launch and task configurations with simple `zig
 
 ## Setup
 
-install the @recommended extensions.
+install the @recommended extensions on vscode.
