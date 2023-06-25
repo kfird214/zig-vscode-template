@@ -1,0 +1,110 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build (Deubg)",
+            "type": "shell",
+            "group": "build",
+            "command": "zig",
+            "args": [
+                "build",
+                "-Doptimize=Debug"
+            ],
+            "isBackground": false,
+            "problemMatcher": [
+                "$zig",
+                "$gcc",
+            ],
+            "icon": {
+                "color": "terminal.ansiBlue",
+                "id": "tools",
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Build (Release)",
+            "type": "shell",
+            "group": "build",
+            "command": "zig",
+            "args": [
+                "build",
+                "-Doptimize=ReleaseSafe"
+            ],
+            "isBackground": false,
+            "problemMatcher": [
+                "$zig",
+                "$gcc",
+            ],
+            "icon": {
+                "color": "terminal.ansiBlue",
+                "id": "tools",
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "Build Current (Debug)",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": true,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true,
+                "close": false,
+                "group": "debug",
+                "revealProblems": "onProblem",
+            },
+            "command": "zig build-exe \"${file}\"",
+            "args": [
+                "-ODebug",
+                "--debug-log",
+                "codegen",
+                // "-fLLVM",
+                // "-ftime-report",
+                // "-fstack-report",
+                // "-Dlog",
+                // "-Dlink-snapshot",
+                // "--verbose-link",
+                // "--verbose-cc",
+                // "--verbose-air",
+                // "--verbose-mir",
+                // "--verbose-llvm-ir",
+                // "--verbose-cimport",
+                // "--verbose-llvm-cpu-features",
+                // "--debug-compile-errors",
+                // "--debug-link-snapshot",
+            ],
+            "group": "build",
+            "problemMatcher": [
+                "$zig",
+                "$gcc",
+            ],
+        },
+        {
+            "label": "Test current",
+            "type": "shell",
+            "command": "zig test ${file}",
+            "problemMatcher": [
+                "$zig",
+                "$gcc",
+            ],
+        }
+    ]
+}
