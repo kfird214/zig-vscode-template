@@ -98,13 +98,72 @@
             ],
         },
         {
-            "label": "Test current",
+            "label": "Build Current (Test)",
+            "detail": "test current active zig file",
             "type": "shell",
-            "command": "zig test ${file}",
+            "command": "zig",
+            "dependsOn": "crate build folder for current test",
+            "args": [
+                "test",
+                "${file}",
+                "-femit-bin=\"${workspaceFolder}/zig-out/bin/tests/${relativeFileDirname}/${fileBasenameNoExtension}.exe\"",
+                "--test-no-exec"
+            ],
             "problemMatcher": [
-                "$zig",
                 "$gcc",
             ],
+            "group": "test",
+            "icon": {
+                "color": "terminal.ansiRed",
+                "id": "beaker"
+            },
+            "runOptions": {
+                "instanceLimit": 5,
+                // "reevaluateOnRerun": true
+            },
+            "options": {
+                // "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false,
+                "clear": true
+            }
+        },
+        {
+            "label": "crate build folder for current test",
+            "type": "shell",
+            "detail": "helper for current test file, create build folder for current active file",
+            "command": ".vscode\\scripts\\make_dir.bat",
+            "args": [
+                "\"${workspaceFolder}/zig-out/bin/tests/${relativeFileDirname}\""
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": false,
+            },
+            "promptOnClose": false,
+            "isBackground": true,
+            "hide": true,
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "runOptions": {
+                "instanceLimit": 10
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
         }
     ]
 }
