@@ -8,10 +8,33 @@
             "type": "shell",
             "group": "build",
             "command": "zig",
-            "args": [
-                "build",
-                "-Doptimize=Debug"
-            ],
+            "linux": {
+                "args": [
+                    "build",
+                    "-Doptimize=Debug",
+                    "-Dtarget=\"x86_64-linux\"",
+                    "-p",
+                    "zig-out/Debug/x86_64-linux",
+                ]
+            },
+            "windows": {
+                "args": [
+                    "build",
+                    "-Doptimize=Debug",
+                    "-Dtarget=\"x86_64-windows\"",
+                    "-p",
+                    "zig-out/Debug/x86_64-windows",
+                ]
+            },
+            "osx": {
+                "args": [
+                    "build",
+                    "-Doptimize=Debug",
+                    "-Dtarget=\"x86_64-macos\"",
+                    "-p",
+                    "zig-out/Debug/x86_64-macos",
+                ]
+            },
             "isBackground": false,
             "problemMatcher": [
                 "$zig",
@@ -35,10 +58,33 @@
             "type": "shell",
             "group": "build",
             "command": "zig",
-            "args": [
-                "build",
-                "-Doptimize=ReleaseSafe"
-            ],
+            "linux": {
+                "args": [
+                    "build",
+                    "-Doptimize=ReleaseFast",
+                    "-Dtarget=\"x86_64-linux\"",
+                    "-p",
+                    "zig-out/Release/x86_64-linux",
+                ]
+            },
+            "windows": {
+                "args": [
+                    "build",
+                    "-Doptimize=ReleaseFast",
+                    "-Dtarget=\"x86_64-windows\"",
+                    "-p",
+                    "zig-out/Release/x86_64-windows",
+                ]
+            },
+            "osx": {
+                "args": [
+                    "build",
+                    "-Doptimize=ReleaseFast",
+                    "-Dtarget=\"x86_64-macos\"",
+                    "-p",
+                    "zig-out/Release/x86_64-macos",
+                ]
+            },
             "isBackground": false,
             "problemMatcher": [
                 "$zig",
@@ -71,26 +117,41 @@
                 "group": "debug",
                 "revealProblems": "onProblem",
             },
-            "command": "zig build-exe \"${file}\"",
-            "args": [
-                "-ODebug",
-                "--debug-log",
-                "codegen",
-                // "-fLLVM",
-                // "-ftime-report",
-                // "-fstack-report",
-                // "-Dlog",
-                // "-Dlink-snapshot",
-                // "--verbose-link",
-                // "--verbose-cc",
-                // "--verbose-air",
-                // "--verbose-mir",
-                // "--verbose-llvm-ir",
-                // "--verbose-cimport",
-                // "--verbose-llvm-cpu-features",
-                // "--debug-compile-errors",
-                // "--debug-link-snapshot",
-            ],
+            "dependsOn": "crate build folder for miscellaneous builds",
+            "command": "zig",
+            "windows": {
+                "args": [
+                    "build-exe",
+                    "${file}",
+                    "-femit-bin=\"${workspaceFolder}\\zig-out\\Debug\\miscellaneous\\x86_64-windows\\${relativeFileDirname}\\${fileBasenameNoExtension}.exe\"",
+                    "-ODebug",
+                    "-Dtarget=\"x86_64-linux\"",
+                    "--debug-log",
+                    "codegen",
+                ],
+            },
+            "linux": {
+                "args": [
+                    "build-exe",
+                    "${file}",
+                    "-femit-bin=\"${workspaceFolder}/zig-out/Debug/miscellaneous/x86_64-linux/${relativeFileDirname}/${fileBasenameNoExtension}\"",
+                    "-ODebug",
+                    "-Dtarget=\"x86_64-windows\"",
+                    "--debug-log",
+                    "codegen",
+                ],
+            },
+            "osx": {
+                "args": [
+                    "build-exe",
+                    "${file}",
+                    "-femit-bin=\"${workspaceFolder}/zig-out/Debug/miscellaneous/x86_64-macos/${relativeFileDirname}/${fileBasenameNoExtension}\"",
+                    "-ODebug",
+                    "-Dtarget=\"x86_64-macos\"",
+                    "--debug-log",
+                    "codegen",
+                ],
+            },
             "group": "build",
             "problemMatcher": [
                 "$zig",
@@ -103,12 +164,33 @@
             "type": "shell",
             "command": "zig",
             "dependsOn": "crate build folder for current test",
-            "args": [
-                "test",
-                "${file}",
-                "-femit-bin=\"${workspaceFolder}/zig-out/bin/tests/${relativeFileDirname}/${fileBasenameNoExtension}.exe\"",
-                "--test-no-exec"
-            ],
+            "windows": {
+                "args": [
+                    "test",
+                    "${file}",
+                    "-femit-bin=\"${workspaceFolder}\\zig-out\\tests\\x86_64-windows\\${relativeFileDirname}\\${fileBasenameNoExtension}.exe\"",
+                    "-Dtarget=\"x86_64-linux\"",
+                    "--test-no-exec"
+                ],
+            },
+            "linux": {
+                "args": [
+                    "test",
+                    "${file}",
+                    "-femit-bin=\"${workspaceFolder}/zig-out/tests/x86_64-linux/${relativeFileDirname}/${fileBasenameNoExtension}\"",
+                    "-Dtarget=\"x86_64-windows\"",
+                    "--test-no-exec"
+                ],
+            },
+            "osx": {
+                "args": [
+                    "test",
+                    "${file}",
+                    "-femit-bin=\"${workspaceFolder}/zig-out/tests/x86_64-macos/${relativeFileDirname}/${fileBasenameNoExtension}\"",
+                    "-Dtarget=\"x86_64-macos\"",
+                    "--test-no-exec"
+                ],
+            },
             "problemMatcher": [
                 "$gcc",
             ],
@@ -138,10 +220,26 @@
             "label": "crate build folder for current test",
             "type": "shell",
             "detail": "helper for current test file, create build folder for current active file",
-            "command": ".vscode\\scripts\\make_dir.bat",
-            "args": [
-                "\"${workspaceFolder}/zig-out/bin/tests/${relativeFileDirname}\""
-            ],
+            "windows": {
+                "command": ".vscode\\scripts\\make_dir.bat",
+                "args": [
+                    "\"${workspaceFolder}\\zig-out\\tests\\x86_64-windows\\${relativeFileDirname}\""
+                ],
+            },
+            "linux": {
+                "command": "mkdir",
+                "args": [
+                    "-p",
+                    "zig-out/tests/x86_64-linux/${relativeFileDirname}"
+                ],
+            },
+            "osx": {
+                "command": "mkdir",
+                "args": [
+                    "-p",
+                    "zig-out/tests/x86_64-macos/${relativeFileDirname}"
+                ],
+            },
             "problemMatcher": [],
             "group": {
                 "kind": "test",
@@ -164,6 +262,53 @@
                 "showReuseMessage": true,
                 "clear": false
             }
-        }
+        },
+        {
+            "label": "crate build folder for miscellaneous builds",
+            "type": "shell",
+            "detail": "helper for current test file, create build folder for current active file",
+            "windows": {
+                "command": ".vscode\\scripts\\make_dir.bat",
+                "args": [
+                    "\"${workspaceFolder}\\zig-out\\Debug\\miscellaneous\\x86_64-windows\\${relativeFileDirname}\""
+                ],
+            },
+            "linux": {
+                "command": "mkdir",
+                "args": [
+                    "-p",
+                    "zig-out/Debug/miscellaneous/x86_64-linux/${relativeFileDirname}"
+                ],
+            },
+            "osx": {
+                "command": "mkdir",
+                "args": [
+                    "-p",
+                    "zig-out/Debug/miscellaneous/x86_64-macos/${relativeFileDirname}"
+                ],
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": false,
+            },
+            "promptOnClose": false,
+            "isBackground": true,
+            "hide": true,
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "runOptions": {
+                "instanceLimit": 10
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
     ]
 }

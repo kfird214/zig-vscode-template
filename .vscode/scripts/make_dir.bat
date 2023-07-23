@@ -1,9 +1,9 @@
 @echo off
 
-SET dir=%1
+SET dir=%~1
 
-if not exist %dir% (
-    echo not
+if not exist "%dir%" (
+    mkdir "%dir%"
 ) else (
     echo directory already exists "%dir%"
 )
