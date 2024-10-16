@@ -153,6 +153,10 @@
                 ],
             },
             "group": "build",
+            "icon": {
+                "color": "terminal.ansiBlue",
+                "id": "tools",
+            },
             "problemMatcher": [
                 "$zig",
                 "$gcc",
